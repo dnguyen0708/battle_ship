@@ -1,5 +1,4 @@
-import { Ship } from "./ship";
-// const { Ship } = require('./ship');
+import Ship from "./ship";
 const gameBoard = (size) => {
 
     const ships = new Array();
@@ -8,15 +7,16 @@ const gameBoard = (size) => {
         return size;
     }
 
-    function placeShip(coords) {
-        const ship = Ship(coords);
-        ships.push(ship);
+    function placeShip(ship) {
+        const newShip = Ship(ship);
+        ships.push(newShip);
     }
 
     function receiveAttack(coord) {
         for (let i = 0; i < ships.length; i++) {
-            if (ships[i].hit(coord)) return;
+            if (ships[i].hit(coord)) return true;
         }
+        return false;
     }
 
     function checkAllShipSunk() {

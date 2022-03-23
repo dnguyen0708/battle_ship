@@ -8,7 +8,7 @@ const Ship = (ship) => {
 
     function hit(pos) {
         for (let i = 0; i < ship.length; i++) {
-            if (ship[i].x === pos.x && ship[i].y === pos.y) {
+            if (ship[i].x == pos.x && ship[i].y == pos.y) {
                 ship[i].mark = true;
                 return true;
             }
@@ -26,4 +26,4 @@ const Ship = (ship) => {
 
     return { getLength, hit, isSunk };
 }
-module.exports = { Ship };
+export default Ship;

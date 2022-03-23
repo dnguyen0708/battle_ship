@@ -1,5 +1,6 @@
-import { Position } from "./position";
-import { Ship } from "./ship";
+import Position from "./position";
+import Ship from "./ship";
+import generateShips from "./generateShips";
 // global var
 const boardSize = 10;
 let shipSize = 5;
@@ -13,13 +14,17 @@ function drawBoard(wrapper) {
     orientation.className = "axis-toggle-btn btn"
     orientation.textContent = "Orientation: X";
     board.className = "board";
-    // board.style.gridTemplateColumns = `repeat(${boardSize},60px)`;
     for (let i = 0; i < boardSize; i++) {
         for (let j = 0; j < boardSize; j++) {
             const square = document.createElement('div');
-            square.className = 'square human active';
             square.dataset.x = j;
             square.dataset.y = i;
+            if (wrapper == ".left-wrapper") {
+                square.className = 'square human active';
+            }
+            else {
+                square.className = "square computer";
+            }
             board.appendChild(square);
         }
     }
@@ -102,6 +107,8 @@ function removeShipPlacementListener() {
         sqr.removeEventListener('mouseout', unHighlighSquare);
         sqr.removeEventListener('click', getShipCoordinates);
     })
+    const hideBtn = document.querySelector(".left-wrapper button");
+    hideBtn.style.display = 'none';
 }
 
 function getShipCoordinates() {
@@ -114,9 +121,18 @@ function getShipCoordinates() {
         s.removeEventListener('mouseout', unHighlighSquare);
         s.removeEventListener('click', getShipCoordinates);
     });
-    ships.push(Ship(newShip));
+    ships.push(newShip);
     shipSize > 1 ? shipSize-- : removeShipPlacementListener();
-    console.log(ships);
+}
+
+function populateCompBoard() {
+    const ships = generateShips();
+    for (let i = 0; i < ships.length; i++) {
+        for (let j = 0; j < ships[i].length; j++) {
+            const square = document.querySelector(`.square.computer[data-x="${ships[i][j].x}"][data-y="${ships[i][j].y}"]`);
+            // square.classList.add('highlight');
+        }
+    }
 }
 
 export {
@@ -125,5 +141,6 @@ export {
     toggleAxis,
     removeShipPlacementListener,
     getShipCoordinates,
+    populateCompBoard,
     ships
 };

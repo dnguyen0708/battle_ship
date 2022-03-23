@@ -1,7 +1,8 @@
+import Position from "./position";
 const Player = (name) => {
 
     function attack(board, atkSqr) {
-        board.receiveAttack(atkSqr);
+        return board.receiveAttack(atkSqr);
     }
 
     return { name, attack };
@@ -21,8 +22,8 @@ const Computer = () => {
     }
 
     function generateAttackSquare(board) {
-        const x = Math.floor(Math.random * board.getSize());
-        const y = Math.floor(Math.random * board.getSize());
+        const x = Math.floor(Math.random() * board.getSize());
+        const y = Math.floor(Math.random() * board.getSize());
         const attackPosition = Position(x, y);
         return attackPosition;
     }
@@ -37,11 +38,12 @@ const Computer = () => {
     }
 
     function attack(board) {
-        board.receiveAttack(generateAttack(board));
+        const attack = generateAttack(board);
+        const attackSucceeded = board.receiveAttack(attack);
+        return { attack, attackSucceeded };
     }
-
     return { attack };
 }
 
 
-module.exports = { Player, Computer };
+export { Player, Computer };
