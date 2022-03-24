@@ -34,7 +34,7 @@ function checkAllShipSunked() {
         gameOver = true;
     }
     else if (compboard.checkAllShipSunk()) {
-        winner.textContent = "YOU WINS! YOU ROCK";
+        winner.textContent = `${player.name} WINS! YOU ROCK`;
         gameOver = true;
     }
 
@@ -48,13 +48,15 @@ function populateBoard() {
     }
 }
 function attackComp(e) {
-    if (player.attack(compboard, Position(e.target.dataset.x, e.target.dataset.y))) {
-        e.target.textContent = "O";
-        // gameOver = true;
-    } else {
-        e.target.textContent = "X";
+    if (e.target.textContent == '') {
+        if (player.attack(compboard, Position(e.target.dataset.x, e.target.dataset.y))) {
+            e.target.textContent = "O";
+            // gameOver = true;
+        } else {
+            e.target.textContent = "X";
+        }
+        gameLoop(false);
     }
-    gameLoop(false);
 }
 function attackPlayer() {
     const { attack, attackSucceeded } = comp.attack(playerboard);

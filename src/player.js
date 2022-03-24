@@ -21,24 +21,24 @@ const Computer = () => {
         return false;
     }
 
-    function generateAttackSquare(board) {
-        const x = Math.floor(Math.random() * board.getSize());
-        const y = Math.floor(Math.random() * board.getSize());
+    function generateAttackSquare() {
+        const x = Math.floor(Math.random() * 10);
+        const y = Math.floor(Math.random() * 10);
         const attackPosition = Position(x, y);
         return attackPosition;
     }
 
-    function generateAttack(board) {
-        let attackPosition = generateAttackSquare(board);
+    function generateAttack() {
+        let attackPosition = generateAttackSquare();
         while (checkAttackMoveExist(attackPosition)) {
-            attackPosition = generateAttackSquare(board);
+            attackPosition = generateAttackSquare();
         }
         attackMove.push(attackPosition);
         return attackPosition;
     }
 
     function attack(board) {
-        const attack = generateAttack(board);
+        const attack = generateAttack();
         const attackSucceeded = board.receiveAttack(attack);
         return { attack, attackSucceeded };
     }
